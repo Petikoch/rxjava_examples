@@ -5,3 +5,4 @@
 * How to "split" one Observable in multiple
 * Based on the groupBy operator http://reactivex.io/documentation/operators/groupby.html
 * Everything runs synchronous in the same thread (main)
+* See also answer http://stackoverflow.com/questions/28854688/split-rx-observable-into-multiple-streams-and-process-individually
