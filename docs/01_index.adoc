@@ -2,5 +2,5 @@
 Peti Koch
 :imagesdir: ./images
 
-include::02_splitting.adoc[]
+include::02_splitting.adoc[Splitting]
 

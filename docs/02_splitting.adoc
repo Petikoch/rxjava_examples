@@ -3,6 +3,6 @@
 === SyncSplittingOddEvenExample
 
 * How to "split" one Observable in multiple
-* Based on the groupBy operator http://reactivex.io/documentation/operators/groupby.html
+* Based on the http://reactivex.io/documentation/operators/groupby.html[groupBy] operator
 * Everything runs synchronous in the same thread (main)
 * See also answer http://stackoverflow.com/questions/28854688/split-rx-observable-into-multiple-streams-and-process-individually
