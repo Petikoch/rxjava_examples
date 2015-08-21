@@ -2,5 +2,5 @@
 Peti Koch
 :imagesdir: ./images
 
-link:./02_splitting.adoc[Splitting]
+link:./02_splitting.adoc[Splitting Observables]
 
