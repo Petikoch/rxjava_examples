@@ -1,0 +1,7 @@
+== Splitting
+
+=== SyncSplittingOddEvenExample
+
+* How to "split" one Observable in multiple
+* Based on the groupBy operator http://reactivex.io/documentation/operators/groupby.html
+* Everything runs synchronous in the same thread (main)

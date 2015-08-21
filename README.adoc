@@ -1,0 +1,40 @@
+= Peti's rxjava_examples
+Peti Koch
+:imagesdir: ./docs
+:project-name: rxjava_examples
+:github-branch: master
+:github-user: Petikoch
+:bintray-user: petikoch
+
+image:http://img.shields.io/badge/license-ASF2-blue.svg["Apache License 2", link="http://www.apache.org/licenses/LICENSE-2.0.txt"]
+image:https://travis-ci.org/{github-user}/{project-name}.svg?branch={github-branch}["Build Status", link="https://travis-ci.org/{github-user}/{project-name}"]
+
+== Introduction
+
+I'm not a RxJava expert. I'm a professional software engineer since 2001 who wants to figure out how to
+do things "reactive" using RxJava and Java 8.
+
+RxJava is very *very* powerful and it's not that easy to get "things right" as beginner, especially when you are doing
+things asynchronously with multiple threads (Schedulers), backpressure, error handling, etc...
+
+In this little Github project I collect and share some examples I made to better "understand things".
+
+Thanks for your feedback and pointing to issues / potential improvements (just open a Github issue).
+
+== Warning
+
+This is just example code. If you reuse it for productive usage, you'll likely have to extend it with unit tests, error handling, logging, ...
+
+== My motivation to create these examples
+
+I wanted to "figure out" how to do certain things and write them down for me as small standalone examples.
+It's kind of a scratchpad with RxJava-based solutions for common programming tasks.
+
+Through sharing these examples
+
+* I hope to help others to get started
+* and to get feedback with input for improving the examples
+
+Best regards,
+
+image::Signature.jpg[]

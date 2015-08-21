@@ -1,0 +1,53 @@
+plugins {
+    id "com.github.ben-manes.versions" version "0.11.3"
+    id "com.github.hierynomus.license" version "0.11.0"
+}
+
+apply plugin: 'java'
+
+version = '0.0.1-SNAPSHOT'
+
+def fileEncoding = 'UTF-8'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    jcenter()
+}
+
+def googleGuavaVersion = '18.0'
+def rxjavaVersion = '1.0.14'
+
+dependencies {
+    compile "com.google.guava:guava:${googleGuavaVersion}"
+    compile "io.reactivex:rxjava:${rxjavaVersion}"
+}
+
+test {
+    systemProperty 'file.encoding', fileEncoding
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = fileEncoding
+}
+
+// http://forums.gradle.org/gradle/topics/set_maxparallelforks_to_number_of_cores_on_the_current_machine
+tasks.withType(Test) {
+    maxParallelForks = Runtime.getRuntime().availableProcessors()
+}
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': project.name,
+                'Built-By': System.getProperty('user.name'),
+                'Built-Date': new Date(),
+                'Built-JDK': System.getProperty('java.version'),
+                'Built-Gradle': gradle.gradleVersion
+    }
+}
+
+license {
+    header = rootProject.file('config/HEADER_apache2.txt')
+    strictCheck = true
+}

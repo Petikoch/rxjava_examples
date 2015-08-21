@@ -1,0 +1,6 @@
+= Peti's rxjava_examples
+Peti Koch
+:imagesdir: ./images
+
+include::02_splitting.adoc[]
+
