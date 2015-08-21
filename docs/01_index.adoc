@@ -4,3 +4,5 @@ Peti Koch
 
 link:./02_splitting.adoc[Splitting Observables]
 
+link:./03_parallel.adoc[Handling Observables parallel]
+
