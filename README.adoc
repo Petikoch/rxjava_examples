@@ -23,7 +23,7 @@ Thanks for your feedback and pointing to issues / potential improvements (just o
 
 == Examples
 
-Check out ./docs/01_index.adoc
+Check out link:./docs/01_index.adoc[Examples]
 
 == Warning
 
