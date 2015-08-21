@@ -17,7 +17,7 @@ package ch.petikoch.examples.rxjava.splitting;
 
 import rx.Observable;
 
-public class SyncSplittingOddEvenExample {
+public class SplittingOddEvenSyncExample {
 
     public static void main(String[] args) throws InterruptedException {
 

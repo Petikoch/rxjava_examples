@@ -1,8 +1,6 @@
 == Splitting Observables
 
-=== SyncSplittingOddEvenExample
-
-link:../src/main/java/ch/petikoch/examples/rxjava/splitting/SyncSplittingOddEvenExample.java[]
+=== SplittingOddEvenSyncExample
 
 * How to "split" one Observable in multiple
 ** the even numbers
@@ -11,9 +9,9 @@ link:../src/main/java/ch/petikoch/examples/rxjava/splitting/SyncSplittingOddEven
 * Everything runs synchronous in the same thread (main)
 * See also question http://stackoverflow.com/questions/28854688/split-rx-observable-into-multiple-streams-and-process-individually
 
-=== SplittingOddEvenAndAsyncHandlingExample
+link:../src/main/java/ch/petikoch/examples/rxjava/splitting/SplittingOddEvenSyncExample.java[]
 
-link:../src/main/java/ch/petikoch/examples/rxjava/splitting/SplittingOddEvenAndAsyncHandlingExample.java[]
+=== SplittingOddEvenAndAsyncHandlingExample
 
 * How to "split" one Observable in multiple
 ** the even numbers
@@ -24,3 +22,5 @@ link:../src/main/java/ch/petikoch/examples/rxjava/splitting/SplittingOddEvenAndA
 Observations:
 
 * The "even number handling thread" finishes earlier than the "odd number handling thread"
+
+link:../src/main/java/ch/petikoch/examples/rxjava/splitting/SplittingOddEvenAndAsyncHandlingExample.java[]
