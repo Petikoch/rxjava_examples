@@ -1,5 +1,9 @@
 == Handling Observables parallel
 
+Probably you also had a difficult start concerning RxJava and threading like http://www.grahamlea.com/2014/07/rxjava-threading-examples.
+
+I had.
+
 === ParallelExample
 
 link:../src/main/java/ch/petikoch/examples/rxjava/parallel/ParallelExample.java[]
