@@ -5,6 +5,22 @@
 link:../src/main/java/ch/petikoch/examples/rxjava/splitting/SyncSplittingOddEvenExample.java[]
 
 * How to "split" one Observable in multiple
+** the even numbers
+** the odd numbers
 * Based on the http://reactivex.io/documentation/operators/groupby.html[groupBy] operator
 * Everything runs synchronous in the same thread (main)
 * See also question http://stackoverflow.com/questions/28854688/split-rx-observable-into-multiple-streams-and-process-individually
+
+=== SplittingOddEvenAndAsyncHandlingExample
+
+link:../src/main/java/ch/petikoch/examples/rxjava/splitting/SplittingOddEvenAndAsyncHandlingExample.java[]
+
+* How to "split" one Observable in multiple
+** the even numbers
+** the odd numbers
+* Handle each even number slowly, async in a separate thread
+* Handle each odd number *very* slowly, async in a separate thread
+
+Observations:
+
+* The "even number handling thread" finishes earlier than the "odd number handling thread"
