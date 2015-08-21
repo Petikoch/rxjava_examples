@@ -21,19 +21,13 @@ In this little Github project I collect and share some examples I made to better
 
 Thanks for your feedback and pointing to issues / potential improvements (just open a Github issue).
 
+== Examples
+
+Check out ./docs/01_index.adoc
+
 == Warning
 
 This is just example code. If you reuse it for productive usage, you'll likely have to extend it with unit tests, error handling, logging, ...
-
-== My motivation to create these examples
-
-I wanted to "figure out" how to do certain things and write them down for me as small standalone examples.
-It's kind of a scratchpad with RxJava-based solutions for common programming tasks.
-
-Through sharing these examples
-
-* I hope to help others to get started
-* and to get feedback with input for improving the examples
 
 Best regards,
 
