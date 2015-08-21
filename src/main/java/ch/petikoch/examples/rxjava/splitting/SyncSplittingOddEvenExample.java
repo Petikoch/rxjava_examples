@@ -21,7 +21,8 @@ public class SyncSplittingOddEvenExample {
 
     public static void main(String[] args) throws InterruptedException {
 
-        Observable<Integer> numberSource = Observable.range(1, 5);
+        Observable<Integer> numberSource = Observable.range(1, 5)
+                .doOnNext(integer1 -> print("Generated: " + integer1));
 
         numberSource.groupBy(number -> isEven(number))
                 .forEach(groupedObservable -> {
