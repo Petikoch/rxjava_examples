@@ -26,20 +26,20 @@ public class SyncSplittingOddEvenExample {
         numberSource.groupBy(number -> isEven(number))
                 .forEach(groupedObservable -> {
                     if (groupedObservable.getKey()) {
-                        groupedObservable.forEach(number -> sysOut(number + " is even"));
+                        groupedObservable.forEach(number -> print(number + " is even"));
                     } else {
-                        groupedObservable.forEach(number -> sysOut(number + " is odd"));
+                        groupedObservable.forEach(number -> print(number + " is odd"));
                     }
                 });
 
-        sysOut("Finished");
+        print("Finished");
     }
 
     private static boolean isEven(int number) {
         return number % 2 == 0;
     }
 
-    private static void sysOut(String text) {
+    private static void print(String text) {
         System.out.println("[" + Thread.currentThread().getName() + "] " + text);
     }
 }

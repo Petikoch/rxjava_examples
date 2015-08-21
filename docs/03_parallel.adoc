@@ -1,0 +1,10 @@
+== Handling Observables parallel
+
+=== ParallelExample
+
+link:../src/main/java/ch/petikoch/examples/rxjava/parallel/ParallelExample.java[]
+
+* How to handle events in parallel with multiple threads: Think of splitting the events to multiple "handlers" which (do the heavy load) and merging back the results
+* Based on the http://reactivex.io/documentation/operators/flatmap.html[flatmap] operator
+* See also https://github.com/ReactiveX/RxJava/issues/1673, especially what happend to the parallel operator
+* See also question http://stackoverflow.com/questions/26249030/rxjava-fetching-observables-in-parallel

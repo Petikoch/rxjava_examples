@@ -17,11 +17,13 @@ repositories {
 }
 
 def googleGuavaVersion = '18.0'
-def rxjavaVersion = '1.0.14'
+def rxJavaVersion = '1.0.14'
+//def rxJavaAsyncVersion = '0.21.0'
 
 dependencies {
     compile "com.google.guava:guava:${googleGuavaVersion}"
-    compile "io.reactivex:rxjava:${rxjavaVersion}"
+    compile "io.reactivex:rxjava:${rxJavaVersion}"
+//    compile "io.reactivex:rxjava-async-util:${rxJavaAsyncVersion}"
 }
 
 test {
