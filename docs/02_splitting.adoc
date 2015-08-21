@@ -16,8 +16,8 @@ link:../src/main/java/ch/petikoch/examples/rxjava/splitting/SplittingOddEvenSync
 * How to "split" one Observable in multiple
 ** the even numbers
 ** the odd numbers
-* Handle each even number slowly, async in a separate thread
-* Handle each odd number *very* slowly, async in a separate thread
+* Handle each even number async and slowly in a separate thread
+* Handle each odd number async and *very* slowly in a separate thread
 
 Observations:
 
