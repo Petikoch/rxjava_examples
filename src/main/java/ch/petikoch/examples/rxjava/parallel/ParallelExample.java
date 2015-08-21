@@ -33,10 +33,9 @@ public class ParallelExample {
                 aNumber -> createSlowlyBlockingPrintObservable(aNumber).subscribeOn(Schedulers.io())
         );
 
-        mergedResults.observeOn(Schedulers.io()).subscribe(aNumber -> print("Finished: " + aNumber));
-
-        // to keep the main thread alive and avoid JVM shutdown
-        Thread.sleep(10000);
+        mergedResults.observeOn(Schedulers.io())
+                .toBlocking()
+                .forEach(aNumber -> print("Finished: " + aNumber));
     }
 
     private static Observable<Integer> createSlowlyBlockingPrintObservable(Integer item) {
