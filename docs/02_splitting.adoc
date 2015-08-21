@@ -1,4 +1,4 @@
-== Splitting
+== Splitting Observables
 
 === SyncSplittingOddEvenExample
 
