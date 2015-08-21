@@ -2,6 +2,8 @@
 
 === SyncSplittingOddEvenExample
 
+link:../src/main/java/ch/petikoch/examples/rxjava/splitting/SyncSplittingOddEvenExample.java[]
+
 * How to "split" one Observable in multiple
 * Based on the http://reactivex.io/documentation/operators/groupby.html[groupBy] operator
 * Everything runs synchronous in the same thread (main)
