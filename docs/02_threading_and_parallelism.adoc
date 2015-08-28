@@ -8,15 +8,14 @@ The main point about Rx and parallelsim / concurrency is probably noted here htt
 a) _"Rx is single-threaded by default"_
 and b) _"While Rx has concurrency features, these should not be mistaken for a concurrency framework. Rx is designed for querying data, and as discussed in the first chapter, parallel computations or composition of asynchronous methods is more appropriate for other frameworks."_
 
-One could sum this up to:
+I would sum this up to:
 
 Rx is created mainly for "clients" (client applications like apps, desktop gui applications, ...) where
-you have typically one thread from the GUI and you would like to on e.g. a form submit "spin off" several background tasks (in parallel),
-combine those asynchronously returning results to one result which you display in the GUI.
+you have typically one thread from the GUI and you would like to "spin off" several background tasks (in parallel) when an event like submitting a form happens,
+combine those asynchronously returning results to one result which you display in the GUI. It's not primarly made for "servers",
+e.g. to handle concurrent HTTP requests in a webserver. But you can use it to do implement "servers", if you know "how".
 
-It's not primarly made for "servers", e.g. to handle concurrent HTTP requests in a webserver. But you can use it to do implement "servers", if you know "how".
-
-See also https://github.com/ReactiveX/RxJava/issues/1673.
+See also https://github.com/ReactiveX/RxJava/issues/1673 and the section about schedulers in http://www.pluralsight.com/courses/reactive-programming-java-8-rxjava.
 
 === OneLaneMcDrive
 
