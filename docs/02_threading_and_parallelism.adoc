@@ -12,7 +12,7 @@ I would sum this up to:
 
 Rx is created mainly for "clients" (client applications like apps, desktop gui applications, ...) where
 you have typically one thread from the GUI and you would like to "spin off" several background tasks (in parallel) when an event like submitting a form happens,
-combine those asynchronously returning results to one result which you display in the GUI. It's not primarly made for "servers",
+combine these asynchronously returning background tasks results to one result which you display in the GUI. It's not primarly made for "servers",
 e.g. to handle concurrent HTTP requests in a webserver. But you can use it to do implement "servers", if you know "how".
 
 See also https://github.com/ReactiveX/RxJava/issues/1673 and the section about schedulers in http://www.pluralsight.com/courses/reactive-programming-java-8-rxjava.
