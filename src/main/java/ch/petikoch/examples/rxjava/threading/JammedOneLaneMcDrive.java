@@ -37,10 +37,10 @@ public class JammedOneLaneMcDrive {
                         customers,
                         arrivals,
                         (customer, eventNumber) -> new CustomerWithArrivalTime(customer + eventNumber, clock.getTime()))
-                        .onBackpressureBuffer()
-                        .doOnNext(customer -> sysout(customer.name + " arrived"));
+                        .doOnNext(customer -> sysout(customer.name + " arrived"))
+                        .observeOn(Schedulers.io());
 
-        Observable<CustomerWithArrivalTime> orderFinishedStream = customerArriveStream.flatMap(
+        Observable<CustomerWithArrivalTime> orderFinishedStream = customerArriveStream.onBackpressureBuffer().flatMap(
                 customerWithArrivalTime -> {
                     Single<String> mac = Single.<String>create(singleSubscriber -> {
                         sysout("Starting with mac for " + customerWithArrivalTime);

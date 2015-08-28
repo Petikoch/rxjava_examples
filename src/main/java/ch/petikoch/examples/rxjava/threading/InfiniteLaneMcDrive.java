@@ -36,11 +36,12 @@ public class InfiniteLaneMcDrive {
                         customers,
                         arrivals,
                         (customer, eventNumber) -> new CustomerWithArrivalTime(customer + eventNumber, clock.getTime()))
-                        .doOnNext(customer -> sysout(customer.name + " arrived"));
+                        .doOnNext(customer -> sysout(customer.name + " arrived"))
+                        .observeOn(Schedulers.io());
 
         AtomicInteger numerOfConcurrentHandledCustomers = new AtomicInteger(0);
 
-        Observable<CustomerWithArrivalTime> orderFinishedStream = customerArriveStream.subscribeOn(Schedulers.io()).flatMap(
+        Observable<CustomerWithArrivalTime> orderFinishedStream = customerArriveStream.flatMap(
                 customerWithArrivalTime -> {
 
                     sysout(numerOfConcurrentHandledCustomers.incrementAndGet() + " concurrent customer(s)");

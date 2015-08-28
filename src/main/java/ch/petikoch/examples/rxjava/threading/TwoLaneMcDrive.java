@@ -36,7 +36,8 @@ public class TwoLaneMcDrive {
                         customers,
                         arrivals,
                         (customer, eventNumber) -> new CustomerWithArrivalTime(customer + eventNumber, clock.getTime()))
-                        .doOnNext(customer -> sysout(customer.name + " arrived"));
+                        .doOnNext(customer -> sysout(customer.name + " arrived"))
+                        .observeOn(Schedulers.io());
 
         AtomicInteger numerOfConcurrentHandledCustomers = new AtomicInteger(0);
 

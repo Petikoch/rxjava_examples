@@ -36,7 +36,8 @@ public class OneLaneMcDrive {
                         customers,
                         arrivals,
                         (customer, eventNumber) -> new CustomerWithArrivalTime(customer + eventNumber, clock.getTime()))
-                        .doOnNext(customer -> sysout(customer.name + " arrived"));
+                        .doOnNext(customer -> sysout(customer.name + " arrived"))
+                        .observeOn(Schedulers.io());
 
         Observable<CustomerWithArrivalTime> orderFinishedStream = customerArriveStream.flatMap(
                 customerWithArrivalTime -> {
