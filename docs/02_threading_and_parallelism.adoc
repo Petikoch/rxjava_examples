@@ -14,7 +14,7 @@ Rx is created mainly for "clients" (client applications like apps, desktop gui a
 you have typically one thread from the GUI and you would like to - on e.g. a form submit - "spin off" several background tasks (in parallel),
 combine those asynchronously returning results to one result which you display in the GUI.
 
-It's not primarly made for "servers", e.g. to handle HTTP requests in a webserver. But you can use it to do implement "servers", if you know "how".
+It's not primarly made for "servers", e.g. to handle concurrent HTTP requests in a webserver. But you can use it to do implement "servers", if you know "how".
 
 See also https://github.com/ReactiveX/RxJava/issues/1673.
 
@@ -26,16 +26,19 @@ Think of a McDrive with one lane and very few customers arriving. The one lane i
 Each customer orders always the same three "things", which you can prepare with 3 workers in the background "in parallel".
 
 * Parallelism in a logical sense
-* Based on the http://reactivex.io/documentation/operators/flatmap.html[flatmap] operator
+* Based on the http://reactivex.io/documentation/operators/flatmap.html[flatmap] operator (Note: @Beta annotated in RxJava 1.0.14)
 
 In this example there is no need for backpressure, since the customers arrive "slow " and the McDrive can handle them in time.
+
+But what happens if you increase the number of arriving customers (=decrease seconds in interval operator)?
+Currently, the http://reactivex.io/documentation/operators/flatmap.html[flatmap] operator implementation in RxJava "blocks" on backpressure.
 
 === TwoLaneMcDrive
 
 link:../src/main/java/ch/petikoch/examples/rxjava/threading/TwoLaneMcDrive.java[]
 
 Same as OneLaneMcDrive, but now with two lanes. There are still few customers arriving concurrently. Each of the lane
-is either free or there is maximum one customer in the lane.
+is either free or there is maximum one customer in the lane. Some we have at each time between 0 and 2 customers concurrently.
 
 * Parallelism in a execution sense: We can handle two customers at the same time
 * Parallelism in a logical sense: Like OneLaneMcDrive
@@ -50,4 +53,14 @@ Same as OneLaneMcDrive, but now with more customers arriving. The McDrive can't 
 so a wait line (queue) builds up. The longer the example runs, the longer the wait line becomes.
 
 We need some kind of backpressure. We choose buffering (queueing).
+
+=== InfiniteLaneMcDrive
+
+link:../src/main/java/ch/petikoch/examples/rxjava/threading/InfiniteLaneMcDrive.java[]
+
+Now, we have an "infinite" number of lanes. The number of lanes grows to the point when we have
+enough lanes to handle all the arriving customers "just in time".
+
+We output the numer of lanes / number of concurrently handled customers.
+
 
