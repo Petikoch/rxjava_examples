@@ -36,11 +36,15 @@ public class TwoLaneMcDrive {
                         customers,
                         arrivals,
                         (customer, eventNumber) -> new CustomerWithArrivalTime(customer + eventNumber, clock.getTime()))
-                        .onBackpressureBuffer()
                         .doOnNext(customer -> sysout(customer.name + " arrived"));
+
+        AtomicInteger numerOfConcurrentHandledCustomers = new AtomicInteger(0);
 
         Observable<CustomerWithArrivalTime> orderFinishedStream = customerArriveStream.flatMap(
                 customerWithArrivalTime -> {
+
+                    sysout(numerOfConcurrentHandledCustomers.incrementAndGet() + " concurrent customer(s)");
+
                     Single<String> mac = Single.<String>create(singleSubscriber -> {
                         sysout("Starting with mac for " + customerWithArrivalTime);
                         simulateWork(12);
@@ -62,7 +66,10 @@ public class TwoLaneMcDrive {
                         singleSubscriber.onSuccess("coke");
                     }).subscribeOn(Schedulers.io());
 
-                    Single<CustomerWithArrivalTime> finishedOrder = Single.zip(mac, fries, coke, (s, s2, s3) -> customerWithArrivalTime);
+                    Single<CustomerWithArrivalTime> finishedOrder = Single.zip(mac, fries, coke, (s, s2, s3) -> {
+                        sysout(numerOfConcurrentHandledCustomers.decrementAndGet() + " concurrent customer(s)");
+                        return customerWithArrivalTime;
+                    });
                     return finishedOrder.toObservable();
                 },
                 2 // = two lanes
