@@ -1,10 +1,10 @@
-== Handling Observables parallel in a logical and in a execution sense
+== Handling Observables parallel (in a logical sense and in a execution sense)
 
 Probably you also had a difficult start concerning RxJava and threading like http://www.grahamlea.com/2014/07/rxjava-threading-examples.
 
 I had.
 
-The main point is probably noted here http://www.introtorx.com/Content/v1.0.10621.0 and states
+The main point about Rx and parallelsim / concurrency is probably noted here http://www.introtorx.com/Content/v1.0.10621.0 and states
 a) _"Rx is single-threaded by default"_
 and b) _"While Rx has concurrency features, these should not be mistaken for a concurrency framework. Rx is designed for querying data, and as discussed in the first chapter, parallel computations or composition of asynchronous methods is more appropriate for other frameworks."_
 
@@ -12,9 +12,9 @@ One could sum this up to:
 
 Rx is created mainly for "clients" (client applications like apps, desktop gui applications, ...) where
 you have typically one thread from the GUI and you would like to - on e.g. a form submit - "spin off" several background tasks (in parallel),
-combine those asynchronously returning taskresults to one result which you display in the GUI.
+combine those asynchronously returning results to one result which you display in the GUI.
 
-It's not primarly made for "servers", e.g. to handle HTTP requests in a webserver. But you can use it to do it anyway, if you know "how".
+It's not primarly made for "servers", e.g. to handle HTTP requests in a webserver. But you can use it to do implement "servers", if you know "how".
 
 See also https://github.com/ReactiveX/RxJava/issues/1673.
 

@@ -2,7 +2,7 @@
 Peti Koch
 :imagesdir: ./images
 
-link:./02_threading_and_parallelism.adoc[Handling Observables parallel in a logical and in a execution sense]
+link:./02_threading_and_parallelism.adoc[Handling Observables parallel (in a logical sense and in a execution sense)]
 
 link:./03_splitting.adoc[Splitting Observables]
 
