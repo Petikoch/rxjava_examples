@@ -36,7 +36,6 @@ public class OneLaneMcDrive {
                         customers,
                         arrivals,
                         (customer, eventNumber) -> new CustomerWithArrivalTime(customer + eventNumber, clock.getTime()))
-                        .onBackpressureBuffer()
                         .doOnNext(customer -> sysout(customer.name + " arrived"));
 
         Observable<CustomerWithArrivalTime> orderFinishedStream = customerArriveStream.flatMap(
