@@ -4,6 +4,8 @@ Probably you also had a difficult start concerning RxJava and threading like htt
 
 I had.
 
+Why did I? I made some false assumptions regarding threading instead of properly learning "stuff" first using e.g. http://www.pluralsight.com/courses/reactive-programming-java-8-rxjava.
+
 The main point about Rx and parallelsim / concurrency is probably noted here http://www.introtorx.com/Content/v1.0.10621.0 and states
 a) _"Rx is single-threaded by default"_
 and b) _"While Rx has concurrency features, these should not be mistaken for a concurrency framework. Rx is designed for querying data, and as discussed in the first chapter, parallel computations or composition of asynchronous methods is more appropriate for other frameworks."_
