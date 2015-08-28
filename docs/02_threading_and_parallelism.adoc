@@ -1,0 +1,44 @@
+== Handling Observables parallel in a logical and in a execution sense
+
+Probably you also had a difficult start concerning RxJava and threading like http://www.grahamlea.com/2014/07/rxjava-threading-examples.
+
+I had.
+
+The main point is probably noted here http://www.introtorx.com/Content/v1.0.10621.0 and states
+a) _"Rx is single-threaded by default"_
+and b) _"While Rx has concurrency features, these should not be mistaken for a concurrency framework. Rx is designed for querying data, and as discussed in the first chapter, parallel computations or composition of asynchronous methods is more appropriate for other frameworks."_
+
+One could sum this up to:
+
+Rx is created mainly for "clients" (client applications like apps, desktop gui applications, ...) where
+you have typically one thread from the GUI and you would like to - on e.g. a form submit - "spin off" several background tasks (in parallel),
+combine those asynchronously returning taskresults to one result which you display in the GUI.
+
+It's not primarly made for "servers", e.g. to handle HTTP requests in a webserver. But you can use it to do it anyway, if you know "how".
+
+See also https://github.com/ReactiveX/RxJava/issues/1673.
+
+=== OneLaneMcDrive
+
+link:../src/main/java/ch/petikoch/examples/rxjava/threading/OneLaneMcDrive.java[]
+
+* How to handle events in parallel with multiple threads: Think of splitting the events to multiple "handlers" which (do the heavy load) and merging back the results
+* Based on the http://reactivex.io/documentation/operators/flatmap.html[flatmap] operator
+* See also question http://stackoverflow.com/questions/26249030/rxjava-fetching-observables-in-parallel
+
+* In this example there is no need for backpressure, since the customers arrive "slow " and the McDrive can handle them in time
+
+=== TwoLaneMcDrive
+
+link:../src/main/java/ch/petikoch/examples/rxjava/threading/TwoLaneMcDrive.java[]
+
+* Same as OneLaneMcDrive, but now with two lanes
+* There is also no need for backpressure, since the customers arrive "slow " and the McDrive can handle them in time
+
+=== JammedOneLaneMcDrive
+
+link:../src/main/java/ch/petikoch/examples/rxjava/threading/JammedOneLaneMcDrive.java[]
+
+* Same as OneLaneMcDrive, but now with more customers arriving than the McDrive can handle
+* We have to think about backpressure -> we buffer (build a wait line)
+* The longer the example runs, the longer the wait line becomes
