@@ -31,7 +31,7 @@ public class OneLaneMcDrive2 {
     public static void main(String[] args) throws InterruptedException {
 
         Observable<String> customers = Observable.just("Fred", "John", "Maria", "Ben", "Ken", "Greg", "Peter", "Henry").repeat();
-        Observable<Long> arrivals = Observable.interval(0, 1, TimeUnit.SECONDS);
+        Observable<Long> arrivals = Observable.interval(0, 10, TimeUnit.SECONDS);
 
         Observable<CustomerWithArrivalTime> customerArriveStream =
                 Observable.zip(
