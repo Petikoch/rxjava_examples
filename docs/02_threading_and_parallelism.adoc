@@ -22,23 +22,32 @@ See also https://github.com/ReactiveX/RxJava/issues/1673.
 
 link:../src/main/java/ch/petikoch/examples/rxjava/threading/OneLaneMcDrive.java[]
 
-* How to handle events in parallel with multiple threads: Think of splitting the events to multiple "handlers" which (do the heavy load) and merging back the results
-* Based on the http://reactivex.io/documentation/operators/flatmap.html[flatmap] operator
-* See also question http://stackoverflow.com/questions/26249030/rxjava-fetching-observables-in-parallel
+Think of a McDrive with one lane and very few customers arriving. The one lane is either free or there is one customer.
+Each customer orders always the same three "things", which you can prepare with 3 workers in the background "in parallel".
 
-* In this example there is no need for backpressure, since the customers arrive "slow " and the McDrive can handle them in time
+* Parallelism in a logical sense
+* Based on the http://reactivex.io/documentation/operators/flatmap.html[flatmap] operator
+
+In this example there is no need for backpressure, since the customers arrive "slow " and the McDrive can handle them in time.
 
 === TwoLaneMcDrive
 
 link:../src/main/java/ch/petikoch/examples/rxjava/threading/TwoLaneMcDrive.java[]
 
-* Same as OneLaneMcDrive, but now with two lanes
-* There is also no need for backpressure, since the customers arrive "slow " and the McDrive can handle them in time
+Same as OneLaneMcDrive, but now with two lanes. There are still few customers arriving concurrently. Each of the lane
+is either free or there is maximum one customer in the lane.
+
+* Parallelism in a execution sense: We can handle two customers at the same time
+* Parallelism in a logical sense: Like OneLaneMcDrive
+
+There is also no need for backpressure, since the customers arrive "slow " and the McDrive can handle them in time.
 
 === JammedOneLaneMcDrive
 
 link:../src/main/java/ch/petikoch/examples/rxjava/threading/JammedOneLaneMcDrive.java[]
 
-* Same as OneLaneMcDrive, but now with more customers arriving than the McDrive can handle
-* We have to think about backpressure -> we buffer (build a wait line)
-* The longer the example runs, the longer the wait line becomes
+Same as OneLaneMcDrive, but now with more customers arriving. The McDrive can't handle all of them "just in time",
+so a wait line (queue) builds up. The longer the example runs, the longer the wait line becomes.
+
+We need some kind of backpressure. We choose buffering (queueing).
+
