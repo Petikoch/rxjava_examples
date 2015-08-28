@@ -31,7 +31,7 @@ Each customer orders always the same three "things", which you can prepare with 
 In this example there is no need for backpressure, since the customers arrive "slow " and the McDrive can handle them in time.
 
 But what happens if you increase the number of arriving customers (=decrease seconds in interval operator)?
-Currently, the http://reactivex.io/documentation/operators/flatmap.html[flatmap] operator implementation in RxJava "blocks" on backpressure.
+Currently, the http://reactivex.io/documentation/operators/flatmap.html[flatmap] operator implementation in RxJava seems to "buffer" on backpressure.
 
 === TwoLaneMcDrive
 
