@@ -1,4 +1,4 @@
-== Splitting Observables
+== Splitting Observables with RxJava and Java 8
 
 === SplittingOddEvenSyncExample
 

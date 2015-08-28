@@ -1,4 +1,4 @@
-= Peti's rxjava_examples
+= Peti's RxJava examples
 Peti Koch
 :imagesdir: ./images
 
