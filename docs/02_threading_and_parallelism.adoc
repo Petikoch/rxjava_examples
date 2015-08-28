@@ -7,14 +7,18 @@ I had.
 Why did I? I made some false assumptions regarding threading instead of properly learning "stuff" first using e.g. http://www.pluralsight.com/courses/reactive-programming-java-8-rxjava.
 
 The main point about Rx and parallelsim / concurrency is probably noted here http://www.introtorx.com/Content/v1.0.10621.0 and states
+
 a) _"Rx is single-threaded by default"_
-and b) _"While Rx has concurrency features, these should not be mistaken for a concurrency framework. Rx is designed for querying data, and as discussed in the first chapter, parallel computations or composition of asynchronous methods is more appropriate for other frameworks."_
+
+and
+
+b) _"While Rx has concurrency features, these should not be mistaken for a concurrency framework. Rx is designed for querying data, and as discussed in the first chapter, parallel computations or composition of asynchronous methods is more appropriate for other frameworks."_
 
 I would sum this up to:
 
 Rx is created mainly for "clients" (client applications like apps, desktop gui applications, ...) where
 you have typically one thread from the GUI and you would like to "spin off" several background tasks (in parallel) when an event like submitting a form happens,
-combine these asynchronously returning background tasks results to one result which you display in the GUI. It's not primarly made for "servers",
+combine these asynchronously returning background task-results to one result which you display in the GUI. It's not primarly made for "servers",
 e.g. to handle concurrent HTTP requests in a webserver. But you can use it to do implement "servers", if you know "how".
 
 See also https://github.com/ReactiveX/RxJava/issues/1673 and the section about schedulers in http://www.pluralsight.com/courses/reactive-programming-java-8-rxjava.
