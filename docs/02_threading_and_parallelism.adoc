@@ -30,7 +30,7 @@ link:../src/main/java/ch/petikoch/examples/rxjava/threading/OneLaneMcDrive.java[
 Think of a McDrive with one lane and very few customers arriving. The one lane is either free or there is one customer.
 Each customer orders always the same three "things", which you can prepare with 3 workers in the background "in parallel".
 
-* Parallelism in a logical sense
+* Parallelism in a logical sense: We can do three things in parallel for one customer
 * Based on the http://reactivex.io/documentation/operators/flatmap.html[flatmap] operator (Note: @Beta annotated in RxJava 1.0.14)
 
 In this example there is no need for backpressure, since the customers arrive "slow " and the McDrive can handle them in time.
