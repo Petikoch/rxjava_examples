@@ -1,4 +1,4 @@
-== Handling Observables parallel with RxJava and Java 8 (in a logical sense and in a execution sense)
+== Threading and Parallelism with RxJava and Java 8
 
 Probably you also had a difficult start concerning RxJava and threading like http://www.grahamlea.com/2014/07/rxjava-threading-examples[Graham Lea did].
 
