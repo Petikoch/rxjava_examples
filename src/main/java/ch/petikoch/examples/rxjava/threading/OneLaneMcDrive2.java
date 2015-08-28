@@ -47,7 +47,7 @@ public class OneLaneMcDrive2 {
 
         customerArriveStream.subscribe(customerWithArrivalTime -> {
             while (!readyForNext.compareAndSet(true, false)) {
-                waitSeconds(1);
+                waitMilliSeconds(1);
             }
 
             Single<String> mac = Single.<String>create(singleSubscriber -> {
@@ -83,7 +83,7 @@ public class OneLaneMcDrive2 {
             sysout(customerWithArrivalTime.name + " says good bye and leaves.");
         });
 
-        Thread.sleep(60000);
+        waitSeconds(60);
     }
 
     private static void sysout(String text) {
@@ -93,6 +93,14 @@ public class OneLaneMcDrive2 {
     private static void waitSeconds(int seconds) {
         try {
             TimeUnit.SECONDS.sleep(seconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void waitMilliSeconds(int millis) {
+        try {
+            Thread.sleep(millis);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

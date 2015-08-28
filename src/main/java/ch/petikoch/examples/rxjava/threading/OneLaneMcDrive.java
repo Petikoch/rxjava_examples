@@ -43,21 +43,21 @@ public class OneLaneMcDrive {
                 customerWithArrivalTime -> {
                     Single<String> mac = Single.<String>create(singleSubscriber -> {
                         sysout("Starting with mac for " + customerWithArrivalTime);
-                        simulateWork(3);
+                        waitSeconds(3);
                         sysout("Mac ready for " + customerWithArrivalTime);
                         singleSubscriber.onSuccess("mac");
                     }).subscribeOn(Schedulers.io());
 
                     Single<String> fries = Single.<String>create(singleSubscriber -> {
                         sysout("Starting with fries for " + customerWithArrivalTime);
-                        simulateWork(2);
+                        waitSeconds(2);
                         sysout("Fries ready for " + customerWithArrivalTime);
                         singleSubscriber.onSuccess("fries");
                     }).subscribeOn(Schedulers.io());
 
                     Single<String> coke = Single.<String>create(singleSubscriber -> {
                         sysout("Starting with coke for " + customerWithArrivalTime);
-                        simulateWork(1);
+                        waitSeconds(1);
                         sysout("Coke ready for " + customerWithArrivalTime);
                         singleSubscriber.onSuccess("coke");
                     }).subscribeOn(Schedulers.io());
@@ -74,14 +74,14 @@ public class OneLaneMcDrive {
             sysout(customerWithArrivalTime.name + " says good bye and leaves.");
         });
 
-        Thread.sleep(60000);
+        waitSeconds(60);
     }
 
     private static void sysout(String text) {
         System.out.println(clock.getTime() + " [" + Thread.currentThread().getName() + "] " + text);
     }
 
-    private static void simulateWork(int seconds) {
+    private static void waitSeconds(int seconds) {
         try {
             TimeUnit.SECONDS.sleep(seconds);
         } catch (InterruptedException e) {
