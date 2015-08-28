@@ -33,6 +33,16 @@ In this example there is no need for backpressure, since the customers arrive "s
 But what happens if you increase the number of arriving customers (=decrease seconds in interval operator)?
 Currently, the http://reactivex.io/documentation/operators/flatmap.html[flatmap] operator implementation in RxJava seems to "buffer" on backpressure.
 
+=== OneLaneMcDrive2
+
+link:../src/main/java/ch/petikoch/examples/rxjava/threading/OneLaneMcDrive2.java[]
+
+An Implementation of OneLaneMcDrive without the http://reactivex.io/documentation/operators/flatmap.html[flatmap] operator.
+Instead we use a PublishSubject instance to "communicate the result to the outside" and use an AtomicBoolean instance to limit
+the number of concurrent customers to one.
+
+You immediately understand now the "power" of the http://reactivex.io/documentation/operators/flatmap.html[flatmap] operator.
+
 === TwoLaneMcDrive
 
 link:../src/main/java/ch/petikoch/examples/rxjava/threading/TwoLaneMcDrive.java[]
