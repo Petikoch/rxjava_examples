@@ -81,6 +81,6 @@ Although you can offload the work from one thread to an other (using Schedulers)
 from one thread to another *one* thread and not to a pool of threads. Your sourcecode (e.g. your observer) is always called by
 only *one* and the *same* thread.
 
-So, to make it more clear _"your sourcecode is always called by the same single thread"_.
+So, to make it more clear: _"your sourcecode is always called by the same single thread"_.
 
 Benefit? You don't have to implement thread-safe code, which is hard.

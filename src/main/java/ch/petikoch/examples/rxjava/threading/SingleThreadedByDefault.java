@@ -16,6 +16,7 @@
 package ch.petikoch.examples.rxjava.threading;
 
 import rx.Observable;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 import java.util.concurrent.TimeUnit;
@@ -29,17 +30,21 @@ public class SingleThreadedByDefault {
         Observable<String> customers = Observable.just("Fred", "John", "Maria", "Ben", "Ken", "Greg", "Peter", "Henry").repeat();
         Observable<Long> arrivals = Observable.interval(0, 1, TimeUnit.SECONDS);
 
-        Observable<String> customerArriveStream =
+        Observable<String> fastCustomerArrivalStream =
                 Observable.zip(
                         customers,
                         arrivals,
                         (customer, eventNumber) -> customer)
                         .doOnNext(customer -> sysout(customer + " arrived"));
 
-        customerArriveStream.observeOn(Schedulers.io()).subscribe(s -> {
-            sysout("-----> Serving " + s);
+        Action1<String> slowCustomerServingAction = customer -> {
+            sysout("-----> Serving " + customer);
             waitSeconds(3);
-        });
+        };
+
+        fastCustomerArrivalStream
+                .observeOn(Schedulers.io())
+                .subscribe(slowCustomerServingAction);
 
         waitSeconds(60);
     }
