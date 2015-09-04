@@ -1,5 +1,7 @@
 == Threading and Parallelism with RxJava and Java 8
 
+=== Intro
+
 Probably you also had a difficult start concerning RxJava and threading like http://www.grahamlea.com/2014/07/rxjava-threading-examples[Graham Lea did].
 
 I had.
@@ -14,14 +16,17 @@ and
 
 b) _"While Rx has concurrency features, these should not be mistaken for a concurrency framework. Rx is designed for querying data, and as discussed in the first chapter, parallel computations or composition of asynchronous methods is more appropriate for other frameworks."_
 
-I would sum this up to:
+==== My summary concerning threading and parallelsim with RxJava (1.0.14)
 
 Rx is created mainly for "clients" (client applications like apps, desktop gui applications, ...) where
-you have typically one thread from the GUI and you would like to "spin off" several background tasks (in parallel) when an event like submitting a form happens,
-combine these asynchronously returning background task-results to one result which you display in the GUI. It's not primarly made for "servers",
-e.g. to handle concurrent HTTP requests in a webserver. But you can use it to do implement "servers", if you know "how".
+you have typically one thread from the GUI and you would like to "spin off" several background tasks (in parallel).
 
-See also https://github.com/ReactiveX/RxJava/issues/1673 and the section about schedulers in http://www.pluralsight.com/courses/reactive-programming-java-8-rxjava.
+Rx is excellent at that, at doing _different_ things in parallel.
+
+When it comes to doing _same_ things in parallel, like in a server where you handle hundreds of client calls in parallel,
+then Rx is not that straight forward. You start with creating Observables, using subscribeOn and flatMap, just to get
+_same_ things to run in parallel. Here are some examples for this.
+
 
 === OneLaneMcDrive
 
@@ -30,7 +35,7 @@ link:../src/main/java/ch/petikoch/examples/rxjava/threading/OneLaneMcDrive.java[
 Think of a McDrive with one lane and very few customers arriving. The one lane is either free or there is one customer.
 Each customer orders always the same three "things", which you can prepare with 3 workers in the background "in parallel".
 
-* Parallelism in a logical sense: We can do three things in parallel for one customer
+* Parallelism in a sense of _different_ things in parallel: We can do three things in parallel for one customer
 * Based on the http://reactivex.io/documentation/operators/flatmap.html[flatmap] operator (Note: @Beta annotated in RxJava 1.0.14)
 
 In this example there is no need for backpressure, since the customers arrive "slow " and the McDrive can handle them in time.
@@ -55,8 +60,8 @@ link:../src/main/java/ch/petikoch/examples/rxjava/threading/TwoLaneMcDrive.java[
 Same as OneLaneMcDrive, but now with two lanes. There are still few customers arriving concurrently. Each of the lane
 is either free or there is maximum one customer in the lane. We have at each time between 0 and 2 customers concurrently.
 
-* Parallelism in a execution sense: We can handle two customers at the same time
-* Parallelism in a logical sense: like OneLaneMcDrive
+* Parallelism in a sense of _same_ things in parallel: We can handle two customers at the same time
+* Parallelism in a sense of _different_ things in parallel: like OneLaneMcDrive
 
 There is also no need for backpressure, since the customers arrive "slow " and the McDrive can handle them in time.
 
@@ -67,7 +72,7 @@ link:../src/main/java/ch/petikoch/examples/rxjava/threading/JammedOneLaneMcDrive
 Same as OneLaneMcDrive, but now with more customers arriving. The McDrive can't handle all of them "just in time",
 so a wait line (queue) builds up. The longer the example runs, the longer the wait line becomes.
 
-We need some kind of backpressure: we choose buffering (queueing) and get a "jam".
+We need some kind of backpressure: we choose buffering (queueing) and get a "jam" (queue becomes longer and longer).
 
 === InfiniteLaneMcDrive
 
@@ -85,8 +90,6 @@ link:../src/main/java/ch/petikoch/examples/rxjava/threading/SingleThreadedByDefa
 Let's come back from the food to the technical details. As initially said, RxJava is _"single threaded by default"_.
 Although you can offload the work from one thread to an other (using Schedulers), the program flow then is switching
 from one thread to another *one* thread and not to a pool of threads. Your sourcecode (e.g. your observer) is always called by
-only *one* and the *same* thread.
-
-So, to make it more clear: _"your sourcecode is always called by the same single thread"_.
+only *one* (and the *same*?) thread.
 
 Benefit? You don't have to implement thread-safe code, which is hard.
