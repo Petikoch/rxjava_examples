@@ -21,7 +21,7 @@ b) _"While Rx has concurrency features, these should not be mistaken for a concu
 Rx is created mainly for "clients" (client applications like apps, desktop gui applications, ...) where
 you have typically one thread from the GUI and you would like to "spin off" several background tasks (in parallel).
 
-Rx is excellent at that, at doing _different_ things in parallel.
+Rx is excellent at that, at doing _different_ things in parallel and combining the asynchronous returning results.
 
 When it comes to doing _same_ things in parallel, like in a server where you handle hundreds of client calls in parallel,
 then Rx is not that straight forward. You start with creating Observables, using subscribeOn and flatMap, just to get
