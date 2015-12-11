@@ -87,7 +87,9 @@ We output the numer of lanes (=number of concurrently handled customers).
 
 link:../src/main/java/ch/petikoch/examples/rxjava/threading/SingleThreadedByDefault.java[]
 
-Let's come back from the food to the technical details. As initially said, RxJava is _"single threaded by default"_.
+Let's come back from the food to the technical details.
+
+As initially said, RxJava is _"single threaded by default"_.
 Although you can offload the work from one thread to an other (using Schedulers), the program flow then is switching
 from one thread to another *one* thread and not to a pool of threads. Your sourcecode (e.g. your observer) is always called by
 only *one* (and usually the *same*) thread.
