@@ -36,45 +36,44 @@ public class InfiniteLaneMcDrive {
                         customers,
                         arrivals,
                         (customer, eventNumber) -> new CustomerWithArrivalTime(customer + eventNumber, clock.getTime()))
-                        .doOnNext(customer -> sysout(customer.name + " arrived"))
-                        .observeOn(Schedulers.io());
+                        .doOnNext(customer -> sysout(customer.name + " arrived"));
 
-        AtomicInteger numerOfConcurrentHandledCustomers = new AtomicInteger(0);
+        AtomicInteger numberOfConcurrentHandledCustomers = new AtomicInteger(0);
 
-        Observable<CustomerWithArrivalTime> orderFinishedStream = customerArriveStream.flatMap(
-                customerWithArrivalTime -> {
+        Observable<CustomerWithArrivalTime> orderFinishedStream = customerArriveStream
+                .flatMap(customerWithArrivalTime -> {
 
-                    sysout(numerOfConcurrentHandledCustomers.incrementAndGet() + " concurrent customer(s)");
+                            sysout(numberOfConcurrentHandledCustomers.incrementAndGet() + " concurrent customer(s) (=number of lanes at the moment)");
 
-                    Single<String> mac = Single.<String>create(singleSubscriber -> {
-                        sysout("Starting with mac for " + customerWithArrivalTime);
-                        waitSeconds(12);
-                        sysout("Mac ready for " + customerWithArrivalTime);
-                        singleSubscriber.onSuccess("mac");
-                    }).subscribeOn(Schedulers.io());
+                            Single<String> mac = Single.<String>create(singleSubscriber -> {
+                                sysout("Starting with mac for " + customerWithArrivalTime);
+                                waitSeconds(12);
+                                sysout("Mac ready for " + customerWithArrivalTime);
+                                singleSubscriber.onSuccess("mac");
+                            }).subscribeOn(Schedulers.io());
 
-                    Single<String> fries = Single.<String>create(singleSubscriber -> {
-                        sysout("Starting with fries for " + customerWithArrivalTime);
-                        waitSeconds(8);
-                        sysout("Fries ready for " + customerWithArrivalTime);
-                        singleSubscriber.onSuccess("fries");
-                    }).subscribeOn(Schedulers.io());
+                            Single<String> fries = Single.<String>create(singleSubscriber -> {
+                                sysout("Starting with fries for " + customerWithArrivalTime);
+                                waitSeconds(8);
+                                sysout("Fries ready for " + customerWithArrivalTime);
+                                singleSubscriber.onSuccess("fries");
+                            }).subscribeOn(Schedulers.io());
 
-                    Single<String> coke = Single.<String>create(singleSubscriber -> {
-                        sysout("Starting with coke for " + customerWithArrivalTime);
-                        waitSeconds(2);
-                        sysout("Coke ready for " + customerWithArrivalTime);
-                        singleSubscriber.onSuccess("coke");
-                    }).subscribeOn(Schedulers.io());
+                            Single<String> coke = Single.<String>create(singleSubscriber -> {
+                                sysout("Starting with coke for " + customerWithArrivalTime);
+                                waitSeconds(2);
+                                sysout("Coke ready for " + customerWithArrivalTime);
+                                singleSubscriber.onSuccess("coke");
+                            }).subscribeOn(Schedulers.io());
 
-                    Single<CustomerWithArrivalTime> finishedOrder = Single.zip(mac, fries, coke, (s, s2, s3) -> {
-                        sysout(numerOfConcurrentHandledCustomers.decrementAndGet() + " concurrent customer(s)");
-                        return customerWithArrivalTime;
-                    });
-                    return finishedOrder.toObservable();
-                },
-                Integer.MAX_VALUE // = "infinite" lanes
-        );
+                            Single<CustomerWithArrivalTime> finishedOrder = Single.zip(mac, fries, coke, (s, s2, s3) -> {
+                                sysout(numberOfConcurrentHandledCustomers.decrementAndGet() + " concurrent customer(s)");
+                                return customerWithArrivalTime;
+                            });
+                            return finishedOrder.toObservable();
+                        },
+                        Integer.MAX_VALUE // = "infinite" lanes
+                );
 
         orderFinishedStream.subscribe(customerWithArrivalTime -> {
             int timeDifference = clock.getTime().difference(customerWithArrivalTime.arrivalTime);
