@@ -38,7 +38,7 @@ public class OneLaneMcDrive2 {
                         customers,
                         arrivals,
                         (customer, eventNumber) -> new CustomerWithArrivalTime(customer + eventNumber, clock.getTime()))
-                        .doOnNext(customer -> sysout(customer.name + " arrived")); // debugging
+                        .doOnNext(customer -> sysout(customer.name + " arrived"));
 
         PublishSubject<CustomerWithArrivalTime> finishedOrderStream = PublishSubject.create();
 
