@@ -1,4 +1,4 @@
-= Peti's rxjava_examples
+= Peti's RxJava examples
 Peti Koch
 :imagesdir: ./docs
 :project-name: rxjava_examples
@@ -13,7 +13,7 @@ image:https://travis-ci.org/{github-user}/{project-name}.svg?branch={github-bran
 I'm not a RxJava expert. I'm a professional software engineer since 2001 who wants to figure out how to
 do things "reactive" using RxJava and Java 8.
 
-RxJava is very *very* powerful and it's not that easy to get "things right" as beginner, especially when you are doing
+RxJava is *very very* powerful and it's not that easy to get "things right" as beginner, especially when you are doing
 things asynchronously with multiple threads (Schedulers), backpressure, error handling, etc...
 
 In this little Github project I collect and share some examples I made to better "understand things".
