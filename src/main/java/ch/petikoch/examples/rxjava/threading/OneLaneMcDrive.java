@@ -38,34 +38,35 @@ public class OneLaneMcDrive {
                         (customer, eventNumber) -> new CustomerWithArrivalTime(customer + eventNumber, clock.getTime()))
                         .doOnNext(customer -> sysout(customer.name + " arrived"));
 
-        Observable<CustomerWithArrivalTime> orderFinishedStream = customerArriveStream.flatMap(
-                customerWithArrivalTime -> {
-                    Single<String> mac = Single.<String>create(singleSubscriber -> {
-                        sysout("Starting with mac for " + customerWithArrivalTime);
-                        waitSeconds(8);
-                        sysout("Mac ready for " + customerWithArrivalTime);
-                        singleSubscriber.onSuccess("mac");
-                    }).subscribeOn(Schedulers.io());
+        Observable<CustomerWithArrivalTime> orderFinishedStream = customerArriveStream
+                .flatMap(
+                        customerWithArrivalTime -> {
+                            Single<String> mac = Single.<String>create(singleSubscriber -> {
+                                sysout("Starting with mac for " + customerWithArrivalTime);
+                                waitSeconds(8);
+                                sysout("Mac ready for " + customerWithArrivalTime);
+                                singleSubscriber.onSuccess("mac");
+                            }).subscribeOn(Schedulers.io());
 
-                    Single<String> fries = Single.<String>create(singleSubscriber -> {
-                        sysout("Starting with fries for " + customerWithArrivalTime);
-                        waitSeconds(4);
-                        sysout("Fries ready for " + customerWithArrivalTime);
-                        singleSubscriber.onSuccess("fries");
-                    }).subscribeOn(Schedulers.io());
+                            Single<String> fries = Single.<String>create(singleSubscriber -> {
+                                sysout("Starting with fries for " + customerWithArrivalTime);
+                                waitSeconds(4);
+                                sysout("Fries ready for " + customerWithArrivalTime);
+                                singleSubscriber.onSuccess("fries");
+                            }).subscribeOn(Schedulers.io());
 
-                    Single<String> coke = Single.<String>create(singleSubscriber -> {
-                        sysout("Starting with coke for " + customerWithArrivalTime);
-                        waitSeconds(1);
-                        sysout("Coke ready for " + customerWithArrivalTime);
-                        singleSubscriber.onSuccess("coke");
-                    }).subscribeOn(Schedulers.io());
+                            Single<String> coke = Single.<String>create(singleSubscriber -> {
+                                sysout("Starting with coke for " + customerWithArrivalTime);
+                                waitSeconds(1);
+                                sysout("Coke ready for " + customerWithArrivalTime);
+                                singleSubscriber.onSuccess("coke");
+                            }).subscribeOn(Schedulers.io());
 
-                    Single<CustomerWithArrivalTime> finishedOrder = Single.zip(mac, fries, coke, (s, s2, s3) -> customerWithArrivalTime);
-                    return finishedOrder.toObservable();
-                },
-                1 // = one lane McDrive
-        );
+                            Single<CustomerWithArrivalTime> finishedOrder = Single.zip(mac, fries, coke, (s, s2, s3) -> customerWithArrivalTime);
+                            return finishedOrder.toObservable();
+                        },
+                        1 // = one lane McDrive
+                );
 
         orderFinishedStream.subscribe(customerWithArrivalTime -> {
             int timeDifference = clock.getTime().difference(customerWithArrivalTime.arrivalTime);
