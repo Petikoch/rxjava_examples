@@ -11,7 +11,7 @@
 
 link:../src/main/java/ch/petikoch/examples/rxjava/splitting/SplittingOddEvenSyncExample.java[]
 
-=== SplittingOddEvenAndAsyncHandlingExample
+=== SplittingOddEvenAsyncExample
 
 * How to "split" one Observable in multiple
 ** the even numbers
@@ -23,4 +23,4 @@ Observations:
 
 * The "even number handling thread" finishes earlier than the "odd number handling thread"
 
-link:../src/main/java/ch/petikoch/examples/rxjava/splitting/SplittingOddEvenAndAsyncHandlingExample.java[]
+link:../src/main/java/ch/petikoch/examples/rxjava/splitting/SplittingOddEvenAsyncExample.java[]

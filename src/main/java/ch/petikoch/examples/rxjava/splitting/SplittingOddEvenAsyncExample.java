@@ -21,19 +21,19 @@ import rx.schedulers.Schedulers;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
-public class SplittingOddEvenAndAsyncHandlingExample {
+public class SplittingOddEvenAsyncExample {
 
     public static void main(String[] args) throws InterruptedException {
 
         Observable<Integer> numberSource = Observable.range(1, 10)
-                .doOnNext(integer1 -> print("Generated: " + integer1));
+                .doOnNext(integer1 -> print("Generated: " + integer1)); // debugging
 
         numberSource.groupBy(number -> isEven(number))
                 .forEach(groupedObservable -> {
                     if (groupedObservable.getKey()) {
-                        groupedObservable.subscribeOn(Schedulers.io()).forEach(number -> printSlow("Found slowly that " + number + " is even"));
+                        groupedObservable.subscribeOn(Schedulers.io()).forEach(number -> printSlow("Found out slowly that " + number + " is even"));
                     } else {
-                        groupedObservable.subscribeOn(Schedulers.io()).forEach(number -> printVerySlow("Found very slowly that " + number + " is odd"));
+                        groupedObservable.subscribeOn(Schedulers.io()).forEach(number -> printVerySlow("Found out very slowly that " + number + " is odd"));
                     }
                 });
 
@@ -52,20 +52,20 @@ public class SplittingOddEvenAndAsyncHandlingExample {
     }
 
     private static void printSlow(String text) {
-        System.out.println("[" + Thread.currentThread().getName() + "] " + text);
         try {
             Thread.sleep(500 + ThreadLocalRandom.current().nextInt(1000));
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        System.out.println("[" + Thread.currentThread().getName() + "] " + text);
     }
 
     private static void printVerySlow(String text) {
-        System.out.println("[" + Thread.currentThread().getName() + "] " + text);
         try {
-            Thread.sleep(2500 + ThreadLocalRandom.current().nextInt(3000));
+            Thread.sleep(1000 + ThreadLocalRandom.current().nextInt(3000));
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        System.out.println("[" + Thread.currentThread().getName() + "] " + text);
     }
 }
