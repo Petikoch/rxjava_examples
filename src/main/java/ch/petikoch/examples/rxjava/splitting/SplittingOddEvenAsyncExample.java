@@ -57,7 +57,7 @@ public class SplittingOddEvenAsyncExample {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println("[" + Thread.currentThread().getName() + "] " + text);
+        print(text);
     }
 
     private static void printVerySlow(String text) {
@@ -66,6 +66,6 @@ public class SplittingOddEvenAsyncExample {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println("[" + Thread.currentThread().getName() + "] " + text);
+        print(text);
     }
 }
