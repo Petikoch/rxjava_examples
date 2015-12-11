@@ -21,6 +21,7 @@ import rx.schedulers.Schedulers;
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class JammedOneLaneMcDrive {
@@ -30,44 +31,44 @@ public class JammedOneLaneMcDrive {
     public static void main(String[] args) throws InterruptedException {
 
         Observable<String> customers = Observable.just("Fred", "John", "Maria", "Ben", "Ken", "Greg", "Peter", "Henry").repeat();
-        Observable<Long> arrivals = Observable.interval(0, 2, TimeUnit.SECONDS);
+        Observable<Long> arrivals = Observable.interval(0, 2, TimeUnit.SECONDS); // leads to to many arriving customers
 
         Observable<CustomerWithArrivalTime> customerArriveStream =
                 Observable.zip(
                         customers,
                         arrivals,
                         (customer, eventNumber) -> new CustomerWithArrivalTime(customer + eventNumber, clock.getTime()))
-                        .doOnNext(customer -> sysout(customer.name + " arrived"))
-                        .observeOn(Schedulers.io());
+                        .doOnNext(customer -> sysout(customer.name + " arrived"));
 
-        Observable<CustomerWithArrivalTime> orderFinishedStream = customerArriveStream.onBackpressureBuffer().flatMap(
-                customerWithArrivalTime -> {
-                    Single<String> mac = Single.<String>create(singleSubscriber -> {
-                        sysout("Starting with mac for " + customerWithArrivalTime);
-                        waitSeconds(3);
-                        sysout("Mac ready for " + customerWithArrivalTime);
-                        singleSubscriber.onSuccess("mac");
-                    }).subscribeOn(Schedulers.io());
+        Observable<CustomerWithArrivalTime> orderFinishedStream = customerArriveStream
+                .onBackpressureBuffer() // SEE HERE, we queue the customers up
+                .flatMap(customerWithArrivalTime -> {
+                            Single<String> mac = Single.<String>create(singleSubscriber -> {
+                                sysout("Starting with mac for " + customerWithArrivalTime);
+                                waitSeconds(8);
+                                sysout("Mac ready for " + customerWithArrivalTime);
+                                singleSubscriber.onSuccess("mac");
+                            }).subscribeOn(Schedulers.io());
 
-                    Single<String> fries = Single.<String>create(singleSubscriber -> {
-                        sysout("Starting with fries for " + customerWithArrivalTime);
-                        waitSeconds(2);
-                        sysout("Fries ready for " + customerWithArrivalTime);
-                        singleSubscriber.onSuccess("fries");
-                    }).subscribeOn(Schedulers.io());
+                            Single<String> fries = Single.<String>create(singleSubscriber -> {
+                                sysout("Starting with fries for " + customerWithArrivalTime);
+                                waitSeconds(4);
+                                sysout("Fries ready for " + customerWithArrivalTime);
+                                singleSubscriber.onSuccess("fries");
+                            }).subscribeOn(Schedulers.io());
 
-                    Single<String> coke = Single.<String>create(singleSubscriber -> {
-                        sysout("Starting with coke for " + customerWithArrivalTime);
-                        waitSeconds(1);
-                        sysout("Coke ready for " + customerWithArrivalTime);
-                        singleSubscriber.onSuccess("coke");
-                    }).subscribeOn(Schedulers.io());
+                            Single<String> coke = Single.<String>create(singleSubscriber -> {
+                                sysout("Starting with coke for " + customerWithArrivalTime);
+                                waitSeconds(1);
+                                sysout("Coke ready for " + customerWithArrivalTime);
+                                singleSubscriber.onSuccess("coke");
+                            }).subscribeOn(Schedulers.io());
 
-                    Single<CustomerWithArrivalTime> finishedOrder = Single.zip(mac, fries, coke, (s, s2, s3) -> customerWithArrivalTime);
-                    return finishedOrder.toObservable();
-                },
-                1 // = one lane
-        );
+                            Single<CustomerWithArrivalTime> finishedOrder = Single.zip(mac, fries, coke, (s, s2, s3) -> customerWithArrivalTime);
+                            return finishedOrder.toObservable();
+                        },
+                        1 // = one lane McDrive
+                );
 
         orderFinishedStream.subscribe(customerWithArrivalTime -> {
             int timeDifference = clock.getTime().difference(customerWithArrivalTime.arrivalTime);
@@ -84,9 +85,9 @@ public class JammedOneLaneMcDrive {
 
     private static String createExclamationMarks(int amount) {
         if (amount >= 5) {
-            final StringBuilder result = new StringBuilder();
-            IntStream.range(0, amount).forEach(value -> result.append("!"));
-            return result.toString();
+            return IntStream.range(0, amount).boxed()
+                    .map(integer -> "!")
+                    .collect(Collectors.joining());
         } else {
             return "";
         }
