@@ -22,7 +22,7 @@ public class SplittingOddEvenSyncExample {
     public static void main(String[] args) throws InterruptedException {
 
         Observable<Integer> numberSource = Observable.range(1, 5)
-                .doOnNext(integer1 -> print("Generated: " + integer1));
+                .doOnNext(integer1 -> print("Generated: " + integer1)); // debugging
 
         numberSource.groupBy(number -> isEven(number))
                 .forEach(groupedObservable -> {
