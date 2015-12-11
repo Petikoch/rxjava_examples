@@ -96,4 +96,6 @@ only *one* (and usually the *same*) thread.
 
 Benefit? You don't have to implement thread-safe code, which is hard.
 
-Drawback? There might be a lot of threads just sitting around. Since a thread is currently (Java 8) a heavy resource, this is suboptimal. A possible solution: Rewrite RxJava to use fibers (lightweight threads).
+Drawback? There might be a lot of threads just sitting around.
+Since a thread is currently (Java 8) a heavy resource, this is _suboptimal_.
+A possible solution: Rewrite RxJava to use fibers (lightweight threads).
