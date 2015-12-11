@@ -42,14 +42,14 @@ public class OneLaneMcDrive {
                 customerWithArrivalTime -> {
                     Single<String> mac = Single.<String>create(singleSubscriber -> {
                         sysout("Starting with mac for " + customerWithArrivalTime);
-                        waitSeconds(3);
+                        waitSeconds(8);
                         sysout("Mac ready for " + customerWithArrivalTime);
                         singleSubscriber.onSuccess("mac");
                     }).subscribeOn(Schedulers.io());
 
                     Single<String> fries = Single.<String>create(singleSubscriber -> {
                         sysout("Starting with fries for " + customerWithArrivalTime);
-                        waitSeconds(2);
+                        waitSeconds(4);
                         sysout("Fries ready for " + customerWithArrivalTime);
                         singleSubscriber.onSuccess("fries");
                     }).subscribeOn(Schedulers.io());
