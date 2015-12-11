@@ -43,6 +43,7 @@ public class SingleThreadedByDefault {
         };
 
         fastCustomerArrivalStream
+                .onBackpressureBuffer()
                 .observeOn(Schedulers.io())
                 .subscribe(slowCustomerServingAction);
 
