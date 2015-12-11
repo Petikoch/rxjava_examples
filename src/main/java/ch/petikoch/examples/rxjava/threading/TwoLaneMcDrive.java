@@ -41,8 +41,7 @@ public class TwoLaneMcDrive {
         AtomicInteger numerOfConcurrentHandledCustomers = new AtomicInteger(0);
 
         Observable<CustomerWithArrivalTime> orderFinishedStream = customerArriveStream
-                .flatMap(
-                        customerWithArrivalTime -> {
+                .flatMap(customerWithArrivalTime -> {
 
                             sysout(numerOfConcurrentHandledCustomers.incrementAndGet() + " concurrent customer(s)");
 

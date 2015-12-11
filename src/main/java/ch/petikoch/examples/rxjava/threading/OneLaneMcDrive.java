@@ -39,8 +39,7 @@ public class OneLaneMcDrive {
                         .doOnNext(customer -> sysout(customer.name + " arrived"));
 
         Observable<CustomerWithArrivalTime> orderFinishedStream = customerArriveStream
-                .flatMap(
-                        customerWithArrivalTime -> {
+                .flatMap(customerWithArrivalTime -> {
                             Single<String> mac = Single.<String>create(singleSubscriber -> {
                                 sysout("Starting with mac for " + customerWithArrivalTime);
                                 waitSeconds(8);
