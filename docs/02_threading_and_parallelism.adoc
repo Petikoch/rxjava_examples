@@ -2,7 +2,7 @@
 
 === Intro
 
-Probably you also had a difficult start concerning RxJava and threading like http://www.grahamlea.com/2014/07/rxjava-threading-examples[Graham Lea did].
+Probably you also had a difficult start concerning RxJava and threading like http://www.grahamlea.com/2014/07/rxjava-threading-examples[Graham Lea] did.
 
 I had.
 
@@ -16,7 +16,7 @@ and
 
 b) _"While Rx has concurrency features, these should not be mistaken for a concurrency framework. Rx is designed for querying data, and as discussed in the first chapter, parallel computations or composition of asynchronous methods is more appropriate for other frameworks."_
 
-==== My summary concerning threading and parallelsim with RxJava (1.0.14)
+==== My summary concerning threading and parallelsim with RxJava (1.1.0)
 
 Rx is created mainly for "clients" (client applications like apps, desktop gui applications, ...) where
 you have typically one thread from the GUI and you would like to "spin off" several background tasks (in parallel).
@@ -36,12 +36,12 @@ Think of a McDrive with one lane and very few customers arriving. The one lane i
 Each customer orders always the same three "things", which you can prepare with 3 workers in the background "in parallel".
 
 * Parallelism in a sense of _different_ things in parallel: We can do three things in parallel for one customer
-* Based on the http://reactivex.io/documentation/operators/flatmap.html[flatmap] operator (Note: @Beta annotated in RxJava 1.0.14)
+* Based on the http://reactivex.io/documentation/operators/flatmap.html[flatmap] operator
 
 In this example there is no need for backpressure, since the customers arrive "slow " and the McDrive can handle them in time.
 
-But what happens if you increase the number of arriving customers (=decrease seconds in interval operator)?
-Currently, the http://reactivex.io/documentation/operators/flatmap.html[flatmap] operator implementation in RxJava seems to "buffer" on backpressure.
+But what happens if you increase the number of arriving customers (=switch from seconds in arrivals interval operator to milliseconds)?
+As expected, you get a `MissingBackpressureException`.
 
 === OneLaneMcDrive2
 

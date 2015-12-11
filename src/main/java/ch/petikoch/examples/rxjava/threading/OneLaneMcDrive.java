@@ -36,8 +36,7 @@ public class OneLaneMcDrive {
                         customers,
                         arrivals,
                         (customer, eventNumber) -> new CustomerWithArrivalTime(customer + eventNumber, clock.getTime()))
-                        .doOnNext(customer -> sysout(customer.name + " arrived"))
-                        .observeOn(Schedulers.io());
+                        .doOnNext(customer -> sysout(customer.name + " arrived")); // debugging
 
         Observable<CustomerWithArrivalTime> orderFinishedStream = customerArriveStream.flatMap(
                 customerWithArrivalTime -> {
@@ -65,7 +64,7 @@ public class OneLaneMcDrive {
                     Single<CustomerWithArrivalTime> finishedOrder = Single.zip(mac, fries, coke, (s, s2, s3) -> customerWithArrivalTime);
                     return finishedOrder.toObservable();
                 },
-                1 // = one lane
+                1 // = one lane McDrive
         );
 
         orderFinishedStream.subscribe(customerWithArrivalTime -> {
