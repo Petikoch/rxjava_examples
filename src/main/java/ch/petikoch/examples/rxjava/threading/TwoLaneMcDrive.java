@@ -36,8 +36,7 @@ public class TwoLaneMcDrive {
                         customers,
                         arrivals,
                         (customer, eventNumber) -> new CustomerWithArrivalTime(customer + eventNumber, clock.getTime()))
-                        .doOnNext(customer -> sysout(customer.name + " arrived"))
-                        .observeOn(Schedulers.io());
+                        .doOnNext(customer -> sysout(customer.name + " arrived"));
 
         AtomicInteger numerOfConcurrentHandledCustomers = new AtomicInteger(0);
 
@@ -73,7 +72,7 @@ public class TwoLaneMcDrive {
                     });
                     return finishedOrder.toObservable();
                 },
-                2 // = two lanes
+                2 // = two lane McDrive
         );
 
         orderFinishedStream.subscribe(customerWithArrivalTime -> {
