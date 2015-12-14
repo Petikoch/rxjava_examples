@@ -21,6 +21,7 @@ link:../src/main/java/ch/petikoch/examples/rxjava/backup_requests/WordCountWithB
 ** When is the timeout due? Hardcoded values don't fit well... You need something like e.g. a dynamically calculated 90th percentile
 ** What if the second call is also slow?
 ** What if the first call is answered just after the second call is issued? Would be nice to take that result and abort the second...
-** What if __all__ calls are currently slow? You'll need something like a circuit breaker... avoid retry storms
+** What if __all__ calls are currently slow? You'll need something like a circuit breaker...
+** You don't want retry-storms. What about an exponential backoff retry strategy like https://github.com/Netflix/ocelli/blob/master/ocelli-core/src/main/java/netflix/ocelli/retrys/ExponentialBackoff.java
 ** What if... (choose your own)
 ** See e.g. https://github.com/Netflix/ocelli or https://github.com/Netflix/Hystrix for more details
