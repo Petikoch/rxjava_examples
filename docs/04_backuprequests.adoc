@@ -24,4 +24,4 @@ link:../src/main/java/ch/petikoch/examples/rxjava/backup_requests/WordCountWithB
 ** What if __all__ calls are currently slow? You'll need something like a circuit breaker...
 ** You don't want retry-storms. What about an exponential backoff retry strategy like https://github.com/Netflix/ocelli/blob/master/ocelli-core/src/main/java/netflix/ocelli/retrys/ExponentialBackoff.java
 ** What if... (choose your own)
-** See e.g. https://github.com/Netflix/ocelli or https://github.com/Netflix/Hystrix for more details
+** For more details see e.g. https://github.com/Netflix/ocelli, https://github.com/Netflix/Hystrix, https://github.com/Netflix/Hystrix/issues/25, http://www.bailis.org/blog/doing-redundant-work-to-speed-up-distributed-queries
