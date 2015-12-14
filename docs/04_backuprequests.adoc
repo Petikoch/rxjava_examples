@@ -1,0 +1,27 @@
+== Backup requests pattern with RxJava and Java 8
+
+=== WordCountWithBackupRequests
+
+The backup requests pattern is a technique to deal e.g. with "long tail latencies".
+See e.g. https://www.typesafe.com/blog/reactive-revealed-part-1-of-3-async-nio-back-pressure-and-the-message-driven-vs-event-driven-approach (slide 77 and
+following) for an introduction.
+
+How to implement this with RxJava?
+
+* In an existing classic, synchronous codebase... sometimes a call is "slow"
+* Solution: The relevant call (imagine calling a remote system) is wrapped with an rx.Observable and executed in a separate thread
+* Using the the http://reactivex.io/documentation/operators/timeout.html[timeout] operator we re-issue the same call again, if it's to slow
+
+link:../src/main/java/ch/petikoch/examples/rxjava/backup_requests/WordCountWithBackupRequests.java[]
+
+**Warning:**
+
+* This is a simplified solution
+* The problem is much more complicated in practice
+** When is the timeout due? Hardcoded values don't fit well... You need something like e.g. a dynamically calculated 90th percentile
+** What if the second call is also slow?
+** What if the first call is answered just after the second call is issued? Would be nice to take that result and abort the second...
+** Avoid retry storms
+** What if all calls are currently slow? You'll need something like a circuit breaker...
+** What if... (choose your own)
+** See e.g. https://github.com/Netflix/ocelli or https://github.com/Netflix/Hystrix for more details

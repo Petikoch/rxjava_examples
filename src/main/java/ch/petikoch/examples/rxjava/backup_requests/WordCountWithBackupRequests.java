@@ -1,0 +1,89 @@
+package ch.petikoch.examples.rxjava.backup_requests;
+
+import com.google.common.base.Stopwatch;
+import rx.Observable;
+import rx.schedulers.Schedulers;
+
+import java.util.Date;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
+
+public class WordCountWithBackupRequests {
+
+	private final static String THE_SENTENCE = "This is the magic sentence.";
+
+	public static void main(String[] args) throws InterruptedException {
+
+		int numberOfSentences = 10_000;
+
+		System.out.println("-----------------------------------------------------------------------");
+		System.out.println("Fast... ");
+		Stopwatch stopwatch = Stopwatch.createStarted();
+		Observable.just(THE_SENTENCE).repeat(numberOfSentences)
+				.toBlocking()
+				.forEach(theSentence -> sysout("Result arrived: " + theSentence + " -> " + fastWordCount(theSentence) + " words"));
+		System.out.println("Elapsed: " + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+
+		System.out.println("-----------------------------------------------------------------------");
+		System.out.println("Sometimes slow...");
+		Thread.sleep(5000);
+		stopwatch = Stopwatch.createStarted();
+		Observable.just(THE_SENTENCE).repeat(numberOfSentences)
+				.toBlocking()
+				.forEach(theSentence -> sysout("Result arrived: " + theSentence + " -> " + sometimesSlowWordCount(theSentence) + " words"));
+		System.out.println("Elapsed: " + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+
+		System.out.println("-----------------------------------------------------------------------");
+		System.out.println("Sometimes slow with backup requests...");
+		Thread.sleep(5000);
+		stopwatch = Stopwatch.createStarted();
+		Observable.just(THE_SENTENCE).repeat(numberOfSentences)
+				.toBlocking()
+				.forEach(theSentence -> sysout("Result arrived: " + theSentence + " -> " + sometimesSlowWordCountWithBackupRequests(theSentence) + " words"));
+		System.out.println("Elapsed: " + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+	}
+
+	private static int fastWordCount(String sentence) {
+		sysout("Counting " + sentence);
+		return sentence.split("\\s+").length;
+	}
+
+	private static int sometimesSlowWordCount(String sentence) {
+		if (ThreadLocalRandom.current().nextInt(100) == 1) {
+			return slowWordCount(sentence);
+		} else {
+			return fastWordCount(sentence);
+		}
+	}
+
+	private static int slowWordCount(String sentence) {
+		sysout("Slooooooooooooooooooooooooooooowwwwwwwwwwwwww counting " + sentence);
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			sysout("Oh man, damn, I was to slooooooooooooooooooooooooooooowwwwwwwwwwwwww and got interrupted...");
+		}
+		return sentence.split("\\s+").length;
+	}
+
+	private static int sometimesSlowWordCountWithBackupRequests(String sentence) {
+		return Observable.fromCallable(() -> sometimesSlowWordCount(sentence)).subscribeOn(Schedulers.io())
+				.timeout(10,
+						TimeUnit.MICROSECONDS,
+						Observable.fromCallable(() -> sometimesSlowWordCount(sentence)).subscribeOn(Schedulers.io()))
+				.toBlocking()
+				.first();
+
+		// :-):
+		// - simple
+		//
+		// :-(
+		// - what if first returns just after second launched -> that's a pitty
+		// - what if second is also slow
+		// - what in case of other errors
+	}
+
+	private static void sysout(String text) {
+		System.out.println(new Date() + " [" + Thread.currentThread().getName() + "] " + text);
+	}
+}

@@ -6,3 +6,5 @@ link:./02_threading_and_parallelism.adoc[Threading and Parallelism with RxJava a
 
 link:./03_splitting.adoc[Splitting Observables]
 
+link:./04_backuprequests.adoc[Backup requests pattern]
+
