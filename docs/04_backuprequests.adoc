@@ -10,7 +10,9 @@ How to implement this with RxJava?
 
 * In an existing classic, synchronous codebase... sometimes a call is "slow"
 * Solution: The relevant call (imagine calling a remote system) is wrapped with an rx.Observable and executed in a separate thread
-* Using the the http://reactivex.io/documentation/operators/timeout.html[timeout] operator we re-issue the same call again, if it's to slow
+* Using the http://reactivex.io/documentation/operators/timer.html[timer] operator we setup a delayed backup call
+* Using the http://reactivex.io/documentation/operators/merge.html[merge] operator we merge the two calls
+* And http://reactivex.io/documentation/operators/first.html[first] emits the "faster" result and does the auto-unsubscribe resulting in cancelling the "slower" call
 
 link:../src/main/java/ch/petikoch/examples/rxjava/backup_requests/WordCountWithBackupRequests.java[]
 
