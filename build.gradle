@@ -1,5 +1,5 @@
 plugins {
-    id "com.github.ben-manes.versions" version "0.12.0"
+    id "com.github.ben-manes.versions" version "0.14.0"
     id "com.github.hierynomus.license" version "0.11.0"
 }
 
@@ -16,8 +16,8 @@ repositories {
     jcenter()
 }
 
-def googleGuavaVersion = '19.0'
-def rxJavaVersion = '1.1.0'
+def googleGuavaVersion = '21.0'
+def rxJavaVersion = '1.2.7'
 
 dependencies {
     compile "com.google.guava:guava:${googleGuavaVersion}"
